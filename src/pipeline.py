@@ -15,8 +15,8 @@ def run_pipeline() -> None:
     transformed_data = transform_data(raw_data)
     validated_data = validate_data(transformed_data)
 
-    # TODO: Save validated_data to CLEAN_DATA_PATH after implementing validation.
-    _ = CLEAN_DATA_PATH
+    CLEAN_DATA_PATH.parent.mkdir(parents=True, exist_ok=True)
+    validated_data.to_csv(CLEAN_DATA_PATH, index=False)
 
     connection = get_database_connection()
     load_clean_data_to_sql(validated_data, connection)
