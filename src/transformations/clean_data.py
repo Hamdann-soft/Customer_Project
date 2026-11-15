@@ -21,5 +21,7 @@ def transform_data(raw_data: pd.DataFrame) -> pd.DataFrame:
   df["order_date"] = pd.to_datetime(df["order_date"], format="mixed", dayfirst=True, errors="coerce")
   df["city"] = df["city"].fillna("Unknown")
   df = df.drop_duplicates()
+  df["order_status"] = df["order_status"].str.strip().str.title()
+  df["order_status"] = df["order_status"].replace({"Cancel": "Cancelled", "Return": "Returned", "Complete": "Completed"})
 
   return df
