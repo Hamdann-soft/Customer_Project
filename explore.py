@@ -1,5 +1,7 @@
 from src.ingestion.load_data import load_raw_data
 from src.transformations.clean_data import transform_data
+from src.database.connection import get_database_connection
+from src.database.load_to_sql import load_clean_data_to_sql
 df = load_raw_data()
 clean=transform_data(df)
 
@@ -26,3 +28,12 @@ from src.validation.validate_data import validate_data
 
 valid = validate_data(clean)
 print(len(clean), len(valid))
+
+
+
+connection = get_database_connection()
+print(connection)
+
+
+
+load_clean_data_to_sql(valid, connection)
